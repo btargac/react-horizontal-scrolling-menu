@@ -593,13 +593,6 @@ export class ScrollMenu extends React.Component<MenuProps, MenuState> {
         translate,
       });
 
-      console.log('id', id, 'x', x, this.elemVisible({
-        elWidth,
-        menuWidth,
-        offset,
-        x,
-      }));
-
       return this.elemVisible({
         elWidth,
         menuWidth,
@@ -871,7 +864,7 @@ export class ScrollMenu extends React.Component<MenuProps, MenuState> {
 
   /** click arrow/scroll */
   public handleArrowClick = (left = true): Void => {
-    const { alignCenter } = this.props;
+    const { alignCenter, rtl } = this.props;
     const { allItemsWidth, menuWidth } = this;
 
     if (!alignCenter && !left && allItemsWidth < menuWidth) {
@@ -899,6 +892,10 @@ export class ScrollMenu extends React.Component<MenuProps, MenuState> {
         : 0;
 
       newTranslate = transl + centerOffset;
+      if (rtl) {
+        // TODO: continue here
+        newTranslate = -this.menuPos - this.menuWidth - newTranslate;
+      }
     }
 
     this.setState({
